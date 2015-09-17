@@ -24,3 +24,15 @@ end
 puts "Seed finished"
 puts "#{Post.count} posts created"
 puts "#{Comment.count} comments created"
+
+# Add a post with a unique title and body to seeds.rb
+p = Post.find_or_create_by!(
+  title: "My Fair Lady",
+  body: "The rain in Spain stays mainly in a plain."
+)
+
+# Add a unique comment
+Comment.find_or_create_by!(
+  post: p,
+  body: "I think she's got it."
+)
