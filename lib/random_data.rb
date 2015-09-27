@@ -23,4 +23,8 @@ module RandomData
     letters.shuffle!
     letters[0,rand(3..8)].join
   end
+
+  def random_price
+    price = 5 * rand(1..10).to_i
+  end
 end
