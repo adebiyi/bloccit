@@ -38,3 +38,5 @@ gem 'turbolinks'
 
 #Use Bootstrap
 gem 'bootstrap-sass'
+
+gem 'bcrypt'
