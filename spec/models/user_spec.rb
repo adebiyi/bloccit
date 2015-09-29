@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:user) {User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "password")}
+  let(:user) {User.create!(name: "bloccit user", email: "user@bloccit.com", password: "password")}
 
   it { should validate_presence_of(:name) }
   it { should validate_length_of(:name).is_at_least(1) }
@@ -21,7 +21,7 @@ RSpec.describe User, type: :model do
       expect(user).to respond_to(:name)
     end
 
-    it "should response to email" do
+    it "should respond to email" do
       expect(user).to respond_to(:email)
     end
   end
@@ -43,4 +43,16 @@ RSpec.describe User, type: :model do
       expect(user_with_invalid_email_format).to_not be_valid
     end
   end
+
+  describe "format user name" do
+    let(:first_user) {User.create!(name: "bloccit a. user", email: "first_user@bloccit.com", password: "password")}
+    let(:second_user) {User.create!(name: "bloccit user", email: "second_user@bloccit.com", password: "password")}
+    it "should format the first user before saving" do
+      expect(first_user.name).to eq("Bloccit A. User")
+    end
+     t "should format the second user before saving" do
+      expect(second_user.name).to eq("Bloccit User")
+    end
+  end
+
 end
