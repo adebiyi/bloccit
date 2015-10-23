@@ -1,24 +1,22 @@
-class User < ActiveRecord::Base
-  has_many :posts
-  
-  before_save { self.email = email.downcase }
-  before_save { self.role ||= :member }
+ class User < ActiveRecord::Base
+   has_many :posts
 
-  EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+   before_save { self.email = email.downcase }
+   before_save { self.role ||= :member }
 
-  validates :name, length: { minimum: 1, maximum: 100 }, presence: true
+   EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
-  validates :email,
-            presence: true,
-            uniqueness: { case_sensitive: false },
-            length: { minimum: 3, maximum: 100 },
-            format: { with: EMAIL_REGEX }
+   validates :name, length: { minimum: 1, maximum: 100 }, presence: true
 
-  validates :password, presence: true, length: { minimum: 6 }, if: "password_digest.nil?"
+   validates :email,
+             presence: true,
+             uniqueness: { case_sensitive: false },
+             length: { minimum: 3, maximum: 100 },
+             format: { with: EMAIL_REGEX }
+   validates :password, presence: true, length: { minimum: 6 }, if: "password_digest.nil?"
+   validates :password, length: { minimum: 6 }, allow_blank: true
 
-  validates :password, length: { minimum: 6 }, allow_blank: true
+   has_secure_password
 
-  has_secure_password
-
-  enum role: [:member, :admin]
+   enum role: [:member, :admin]
 end
