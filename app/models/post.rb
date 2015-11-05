@@ -5,7 +5,7 @@ class Post < ActiveRecord::Base
   has_many :labelings, as: :labelable
   has_many :labels, through: :labelings
 
-  has_one :rating, as: :rating_info
+  has_one :rating, as: :ratingable, dependent: :destroy
 
   default_scope { order('created_at DESC')}
 

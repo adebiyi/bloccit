@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   resources :labels, only: [:show]
 
-  resources :ratings, only: [:show]
+  resources :rating, only: [:show]
 
   # #1
   resources :topics do
