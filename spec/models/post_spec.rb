@@ -51,17 +51,17 @@ RSpec.describe Post, type: :model do
        end
      end
  
-     describe "#down_votes" do
+    describe "#down_votes" do
        it "counts the number of votes with value = -1" do
          expect( post.down_votes ).to eq(@down_votes)
        end
-     end
+    end
  
-     describe "#points" do
+    describe "#points" do
        it "returns the sum of all down and up votes" do
          expect( post.points ).to eq(@up_votes - @down_votes)
        end
-     end
+    end
 
     describe "#update_rank" do
        it "calculates the correct rank" do
@@ -80,6 +80,22 @@ RSpec.describe Post, type: :model do
          post.votes.create!(value: -1)
          expect(post.rank).to eq (old_rank - 1)
        end
-     end
-   end
-end
+    end
+  end
+
+  describe "#create_vote" do
+      it "sets the post up_votes to 1" do
+        expect( post.up_votes ).to eq(1)
+      end
+
+      it "calls #create_vote when a post is created" do
+        post = topic.posts.new(title: RandomData.random_sentence, body: RandomData.random_paragraph, user: user)
+        expect(post).to receive(:create_vote)
+        post.save
+      end
+
+      it "associates the first vote with the owner of the post" do
+        expect(post.votes.first.user).to eq(post.user)
+      end
+    end
+  end
