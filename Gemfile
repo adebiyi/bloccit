@@ -4,6 +4,8 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.3'
 
+gem 'figaro', '1.0'
+
 # #1
 group :production do
   gem 'pg'
@@ -19,6 +21,7 @@ end
 group :development, :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'shoulda-matchers'
+  
 end
 
 # Use SCSS for stylesheets
