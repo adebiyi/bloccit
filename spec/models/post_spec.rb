@@ -50,19 +50,19 @@ RSpec.describe Post, type: :model do
        it "counts the number of votes with value = 1" do
          expect( post.up_votes ).to eq(@up_votes)
        end
-     end
+    end
  
-     describe "#down_votes" do
+    describe "#down_votes" do
        it "counts the number of votes with value = -1" do
          expect( post.down_votes ).to eq(@down_votes)
        end
-     end
+    end
  
-     describe "#points" do
+    describe "#points" do
        it "returns the sum of all down and up votes" do
          expect( post.points ).to eq(@up_votes - @down_votes)
        end
-     end
+    end
 
     describe "#update_rank" do
        it "calculates the correct rank" do
@@ -81,6 +81,18 @@ RSpec.describe Post, type: :model do
          post.votes.create!(value: -1)
          expect(post.rank).to eq (old_rank - 1)
        end
-     end
-   end
+    end
+  end
+
+  describe "#create_favorite" do
+    it "calls #create_favorite when a post is created" do
+      post = topic.posts.new(title: RandomData.random_sentence, body: RandomData.random_paragraph, user: user)
+      expect(post).to receive(:create_favorite)
+      post.save
+    end
+
+    it "associates the first favorite with the owner of the post" do
+      expect(post.favorites.first.user).to eq(post.user)
+    end
+  end
 end
